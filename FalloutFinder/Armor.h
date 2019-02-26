@@ -9,23 +9,27 @@ private:
    std::string name;
    int value;
    int weight;
-   int baseid;
+   std::string baseid;
+   int dmg_r;
+   int item_hp;
 
 public:
-   Armor(std::string _name, int _value, int _weight, int _baseid) {
-      name = _name;
-      value = _value;
-      weight = _weight;
-      baseid = _baseid;
-   }
+   Armor(std::string n, int v, int w, std::string bid, int dr, int ih)
+   : name(n), value(v), weight(w), baseid(bid), dmg_r(dr), item_hp(ih)
+   {}
 
-   std::string GetName() override;
-   int GetValue() override;
-   int GetWeight() override;
-   int GetBaseId() override;
+   Armor(std::string n) 
+   : name(n), value(0), weight(0), baseid(""), dmg_r(0), item_hp(0)
+   {}
+
+   std::string const GetName() override;
+   int const GetValue() override;
+   int const GetWeight() override;
+   std::string const GetBaseId() override;
+
+   int const GetDR();
+   int const GetItemHP();
 
 };
-
-
 #endif
 

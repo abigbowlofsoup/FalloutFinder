@@ -6,9 +6,13 @@ int main() {
    
    std::cout << "Welcome to Fallout Finder!" << std::endl;
 
-   Armor a("Hello", 2, 2, 2);
+   auto a = std::make_unique<Armor>("Environment Suit", 100, 5, "000c09d4" , 2, 2);
 
-   std::cout << a.GetName() << std::endl;
+   Armor a1("YaBoi");
+
+   std::cout << a->GetWeight() << std::endl;
+   //std::cout << a1.GetDR() << std::endl;
+
 
    std::cin.get();
    
