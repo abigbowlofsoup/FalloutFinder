@@ -15,11 +15,11 @@ private:
 
 public:
    Armor(std::string n, int v, int w, std::string bid, int dr, int ih)
-   : name(n), value(v), weight(w), baseid(bid), dmg_r(dr), item_hp(ih)
+   : name(n), value(v), weight(w), baseid(bid), item_hp(ih), dmg_r(dr)
    {}
 
    Armor(std::string n) 
-   : name(n), value(0), weight(0), baseid(""), dmg_r(0), item_hp(0)
+   : name(n), value(0), weight(0), baseid(""), item_hp(0), dmg_r(0)
    {}
 
    std::string const GetName() override;
@@ -29,6 +29,8 @@ public:
 
    int const GetDR();
    int const GetItemHP();
+
+   void PrintAll();
 
 };
 #endif

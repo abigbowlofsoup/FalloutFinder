@@ -25,3 +25,12 @@ int const Armor::GetDR() {
 int const Armor::GetItemHP() {
    return item_hp;
 }
+
+void Armor::PrintAll() {
+   std::cout << "Name: " << name << std::endl
+      << "Value: " << value << std::endl
+      << "Weight: " << weight << std::endl
+      << "BaseID: " << baseid << std::endl 
+      << "Damge Rating: " << dmg_r << std::endl 
+      << "Item HP: " << item_hp << std::endl;
+}
