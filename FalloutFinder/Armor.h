@@ -20,10 +20,6 @@ public:
    : name(n), value(v), weight(w), baseid(bid), item_hp(ih), dmg_r(dr)
    {}
 
-   Armor(std::string n) 
-   : name(n), value(0), weight(0), baseid(""), item_hp(0), dmg_r(0)
-   {}
-
    Armor(std::vector<std::string> const &entity);
 
    std::string const GetName() override;
@@ -35,8 +31,6 @@ public:
    int const GetItemHP();
 
    void PrintAll();
-
-   Armor ArmorFromVec(std::vector<std::string> const &entity);
 
 };
 #endif

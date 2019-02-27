@@ -13,26 +13,52 @@ void UpdateArmorVec(std::vector<Armor> &v_output, container const &v_input);
 
 int main() {
    
+   //-----------------File I/O-----------------
    // Opening a .csv file for information
    std::ifstream input("../Armor.csv");
-   if (!input) std::cerr << "Could not open the file!" << std::endl;
-
-   std::cout << "Welcome to Fallout Finder!\n"
-      << "--------------------------" << std::endl;;
-
-   // Creates a 2d vector of info from our file
-   container processed = ProcessFile(input, 0);
-   std::vector<Armor> v_armor;
-
-
-   UpdateArmorVec(v_armor, processed);
-
-   for (int i = 0; i < v_armor.size(); ++i) {
-      v_armor[i].PrintAll();
-      std::cout << "---------------" << std::endl;
+   if (!input) {
+      std::cerr << "Could not open the file!" << std::endl;
+      return 0;
    }
 
+   // Creates a 2d vector of info from our file
+   // and creates an Armor vector with our items
+   container processed = ProcessFile(input, 0);
+   std::vector<Armor> v_armor;
+   UpdateArmorVec(v_armor, processed);
 
+   //-----------------I/O-----------------
+   std::cout << "Welcome to Fallout Finder!\n"
+      << "--------------------------" << std::endl << ">";
+   
+   // From StackOverflow
+   for (std::string line; std::getline(std::cin, line); ) {
+      
+      if (line.empty()) { continue; }
+
+
+      if (line == "A" || line == "a") { 
+         continue; 
+      }
+
+      if (line == "R" || line == "r") {
+         continue;
+      }
+
+      if (line[0] == 'E' || line[0] == 'e') { break; }
+
+      std::cout << "Sorry, I did not understand.\n>";
+   }
+
+   std::cout << "Goodbye!\n";
+   
+
+   
+
+   /*for (int i = 0; i < v_armor.size(); ++i) {
+      v_armor[i].PrintAll();
+      std::cout << "---------------" << std::endl;
+   }*/
 
    input.close();
    std::cin.get();
@@ -60,7 +86,11 @@ container ProcessFile(std::ifstream &in, int i_type) {
    container v_obj;
    // Standard variables in every Item
    std::string _name, _value, _weight, _baseid, _itemhp;
-      
+
+   // Get rid of column names in csv
+   std::string dummy;
+   std::getline(in, dummy);
+
    while (!in.eof()) {
       std::vector<std::string> v_row;
 
@@ -102,6 +132,7 @@ container ProcessFile(std::ifstream &in, int i_type) {
    return v_obj;
 }
 
+// Adds our items to the Armor vector
 void UpdateArmorVec(std::vector<Armor> &v_output, container const &v_input) {
    for (int r = 0; r < v_input.size(); ++r) {
       // Create Armor instances out of 2d vector

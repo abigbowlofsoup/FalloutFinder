@@ -1,2 +1,8 @@
-﻿Environment Suit,100,5,000c09d4,2,2
+﻿Name,Value,weight,baseid,item hp,damage rating
+Environment Suit,100,5,000c09d4,2,2
 Chinese Jumpsuit,10,2,00078646,15,1
+Armored Vault 101 Jumpsuit,180,15,00034121,100,12
+Child's Vault 101 Jumpsuit,5,2,000340f2,100,1
+Dad's Wasteland Outfit,6,20,00079f09,100,2
+Modified Utility Jumpsuit,30,2,0007c17c,100,1
+Tunnel Snake Outfit,8,2,0002042e,100,4
