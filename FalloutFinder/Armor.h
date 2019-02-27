@@ -1,6 +1,8 @@
 #ifndef ARMOR_H
 #define ARMOR_H
 
+#include <vector>
+#include <string>
 #include "Item.h"
 
 
@@ -22,6 +24,8 @@ public:
    : name(n), value(0), weight(0), baseid(""), item_hp(0), dmg_r(0)
    {}
 
+   Armor(std::vector<std::string> const &entity);
+
    std::string const GetName() override;
    int const GetValue() override;
    int const GetWeight() override;
@@ -31,6 +35,8 @@ public:
    int const GetItemHP();
 
    void PrintAll();
+
+   Armor ArmorFromVec(std::vector<std::string> const &entity);
 
 };
 #endif

@@ -1,6 +1,16 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Armor.h"
+
+Armor::Armor(std::vector<std::string> const &entity) {
+   name = entity[0];
+   value = std::stoi(entity[1]);
+   weight = std::stoi(entity[2]);
+   baseid = entity[3];
+   item_hp = std::stoi(entity[4]);
+   dmg_r = std::stoi(entity[5]);
+}
 
 std::string const Armor::GetName() {
    return name;
@@ -28,9 +38,9 @@ int const Armor::GetItemHP() {
 
 void Armor::PrintAll() {
    std::cout << "Name: " << name << std::endl
-      << "Value: " << value << std::endl
+      << "Damge Rating: " << dmg_r << std::endl
+      << "Item HP: " << item_hp << std::endl
       << "Weight: " << weight << std::endl
-      << "BaseID: " << baseid << std::endl 
-      << "Damge Rating: " << dmg_r << std::endl 
-      << "Item HP: " << item_hp << std::endl;
+      << "Value: " << value << std::endl
+      << "BaseID: " << baseid << std::endl;
 }

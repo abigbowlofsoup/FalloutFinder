@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <sstream>
 #include <vector>
 #include "Armor.h"
 
@@ -10,20 +9,30 @@
 void SkipBOM(std::ifstream &in);
 container ProcessFile(std::ifstream &in, int i_type);
 
+void UpdateArmorVec(std::vector<Armor> &v_output, container const &v_input);
+
 int main() {
    
    // Opening a .csv file for information
    std::ifstream input("../Armor.csv");
    if (!input) std::cerr << "Could not open the file!" << std::endl;
 
-   std::cout << "Welcome to Fallout Finder!" << std::endl;
+   std::cout << "Welcome to Fallout Finder!\n"
+      << "--------------------------" << std::endl;;
 
-   ProcessFile(input, 0);
+   // Creates a 2d vector of info from our file
+   container processed = ProcessFile(input, 0);
+   std::vector<Armor> v_armor;
 
-   /*auto a = std::make_unique<Armor>("Environment Suit", 100, 5, "000c09d4" , 2, 2);
 
-   a->PrintAll();*/
-   //std::cout << a1.GetDR() << std::endl;
+   UpdateArmorVec(v_armor, processed);
+
+   for (int i = 0; i < v_armor.size(); ++i) {
+      v_armor[i].PrintAll();
+      std::cout << "---------------" << std::endl;
+   }
+
+
 
    input.close();
    std::cin.get();
@@ -31,6 +40,7 @@ int main() {
    return 0;
 }
 
+// From StackOverflow
 void SkipBOM(std::ifstream &in) {
    char test[3] = { 0 };
    in.read(test, 3);
@@ -89,13 +99,14 @@ container ProcessFile(std::ifstream &in, int i_type) {
       v_obj.push_back(v_row);
 
    }
-
-   for(int r = 0; r < v_obj.size(); ++r){
-      std::cout << "----------------" << std::endl;
-      for (int c = 0; c < v_obj[r].size(); ++c) {
-         std::cout << v_obj[r][c] << std::endl;
-      }
-   }
-
    return v_obj;
+}
+
+void UpdateArmorVec(std::vector<Armor> &v_output, container const &v_input) {
+   for (int r = 0; r < v_input.size(); ++r) {
+      // Create Armor instances out of 2d vector
+      // and push it into vector
+      Armor var(v_input[r]);
+      v_output.push_back(var);
+   }
 }
