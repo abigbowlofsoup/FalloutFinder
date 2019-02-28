@@ -12,7 +12,7 @@ container ProcessFile(std::ifstream &in, int i_type);
 void UpdateArmorVec(std::vector<Armor> &v_output, container const &v_input);
 
 int main() {
-   
+      
    //-----------------File I/O-----------------
    // Opening a .csv file for information
    std::ifstream input("../Armor.csv");
@@ -32,7 +32,7 @@ int main() {
       << "--------------------------" << std::endl << ">";
    
    // From StackOverflow
-   for (std::string line; std::getline(std::cin, line); ) {
+   /*for (std::string line; std::getline(std::cin, line); ) {
       
       if (line.empty()) { continue; }
 
@@ -48,7 +48,7 @@ int main() {
       if (line[0] == 'E' || line[0] == 'e') { break; }
 
       std::cout << "Sorry, I did not understand.\n>";
-   }
+   }*/
 
    std::cout << "Goodbye!\n";
    

@@ -3,7 +3,7 @@
 #include <vector>
 #include "Armor.h"
 
-Armor::Armor(std::vector<std::string> const &entity) {
+Armor::Armor(const std::vector<std::string> &entity) {
    name = entity[0];
    value = std::stoi(entity[1]);
    weight = std::stoi(entity[2]);
@@ -12,27 +12,27 @@ Armor::Armor(std::vector<std::string> const &entity) {
    dmg_r = std::stoi(entity[5]);
 }
 
-std::string const Armor::GetName() {
+std::string Armor::GetName() const{
    return name;
 }
 
-int const Armor::GetValue() {
+int Armor::GetValue() const {
    return value;
 }
 
-int const Armor::GetWeight() {
+int Armor::GetWeight() const {
    return weight;
 }
 
-std::string const Armor::GetBaseId() {
+std::string Armor::GetBaseId() const {
    return baseid;
 }
 
-int const Armor::GetDR() {
+int Armor::GetDR() const {
    return dmg_r;
 }
 
-int const Armor::GetItemHP() {
+int Armor::GetItemHP() const{
    return item_hp;
 }
 

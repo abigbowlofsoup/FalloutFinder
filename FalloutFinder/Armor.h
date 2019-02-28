@@ -20,15 +20,15 @@ public:
    : name(n), value(v), weight(w), baseid(bid), item_hp(ih), dmg_r(dr)
    {}
 
-   Armor(std::vector<std::string> const &entity);
+   Armor(const std::vector<std::string> &entity);
 
-   std::string const GetName() override;
-   int const GetValue() override;
-   int const GetWeight() override;
-   std::string const GetBaseId() override;
+   std::string GetName() const override;
+   int GetValue() const override;
+   int  GetWeight() const override;
+   std::string GetBaseId() const override;
 
-   int const GetDR();
-   int const GetItemHP();
+   int GetDR() const;
+   int GetItemHP() const;
 
    void PrintAll();
 
