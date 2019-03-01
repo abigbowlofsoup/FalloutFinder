@@ -29,12 +29,14 @@ int main(int argc, char* argv[]) {
       return 0;
    }
 
-   // Creates a 2d vector of info from our file
-   // and creates an Armor vector with our items
+   // Creates a 2d vector pointer, processes the file 
+   // and adds the sorted items into our vector
+   // TODO: figure out what item is going to be created for the pointer
+   auto v_items = std::make_unique<vector<Armor>>();
    container processed = ProcessFile(input, 0);
-   auto v_armor = std::make_unique<vector<Armor>>();
-
-   UpdateArmorVec(v_armor, processed);
+   UpdateArmorVec(v_items, processed);
+   
+   cout << endl;
 
    //-----------------I/O-----------------
    cout << "Welcome to Fallout Finder!\n"
@@ -48,21 +50,19 @@ int main(int argc, char* argv[]) {
       if (line.empty()) { continue; }
 
 
-      if (line == "A" || line == "a") { 
+      if (line.at(0) == 'A' || line.at(0) == 'a') {
          cout << ">";
          continue; 
       }
 
-      if (line == "S" || line == "s") {
-         SortArray(v_armor);
-
-         cout << "Items sorted!\n" << ">";
+      if (line.at(0) == 'S' || line.at(0) == 's') {
+         cout << ">";
          continue;
       }
 
-      if (line == "P" || line == "p") {
-         for (int i = 0; i < (*v_armor).size(); ++i) {
-            (*v_armor)[i].PrintName();
+      if (line.at(0) == 'P' || line.at(0) == 'p') {
+         for (int i = 0; i < (*v_items).size(); ++i) {
+            (*v_items)[i].PrintName();
             cout << "---------------" << endl;
          }
          cout << ">";
@@ -144,6 +144,8 @@ container ProcessFile(std::ifstream &in, int i_type) {
       v_obj.push_back(v_row);
 
    }
+
+   cout << "Items Processed!" << endl;
    return v_obj;
 }
 
@@ -155,6 +157,8 @@ void UpdateArmorVec(std::unique_ptr<vector<Armor>>& v_output, container const &v
       Armor var(v_input[r]);
       v_output->push_back(var);
    }
+   // Sort the array
+   SortArray(v_output);
 }
 
 // Insertion Sort
@@ -171,4 +175,6 @@ void SortArray(std::unique_ptr<vector<Armor>>& v_array) {
       (*v_array).at(j + 1) = x;
       ++i;
    }
+
+   cout << "Items Sorted!" << endl;
 }
