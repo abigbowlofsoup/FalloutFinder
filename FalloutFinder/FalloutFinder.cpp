@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
    //-----------------I/O-----------------
    cout << "Welcome to Fallout Finder!\n"
       << "--------------------------" << endl 
-      << "[P]rint name, [S]ort Data, [E]xit Program\n";
+      << "[P]rint name, [S]ort Data, [E]xit Program\n" << ">";
    
    // From StackOverflow
    for (string line; std::getline(std::cin, line); ) {
@@ -49,11 +49,14 @@ int main(int argc, char* argv[]) {
 
 
       if (line == "A" || line == "a") { 
+         cout << ">";
          continue; 
       }
 
       if (line == "S" || line == "s") {
-         cout << ">";
+         SortArray(v_armor);
+
+         cout << "Items sorted!\n" << ">";
          continue;
       }
 
@@ -74,7 +77,6 @@ int main(int argc, char* argv[]) {
    cout << "Goodbye!\n";
 
    input.close();
-   std::cin.get();
    
    return 0;
 }
@@ -155,6 +157,7 @@ void UpdateArmorVec(std::unique_ptr<vector<Armor>>& v_output, container const &v
    }
 }
 
+// Insertion Sort
 void SortArray(std::unique_ptr<vector<Armor>>& v_array) {
    int i = 1;
 
