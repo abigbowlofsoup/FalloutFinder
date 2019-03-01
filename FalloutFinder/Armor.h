@@ -31,6 +31,9 @@ public:
    int GetItemHP() const;
 
    void PrintAll();
+   void PrintName();
+
+   bool operator>(const Armor& other);
 
 };
 #endif

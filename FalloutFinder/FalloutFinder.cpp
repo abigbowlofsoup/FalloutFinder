@@ -17,6 +17,7 @@ void SkipBOM(std::ifstream &in);
 container ProcessFile(std::ifstream &in, int i_type);
 
 void UpdateArmorVec(std::unique_ptr<vector<Armor>>& v_output, container const &v_input);
+void SortArray(std::unique_ptr<vector<Armor>>& v_output);
 
 int main(int argc, char* argv[]) {
       
@@ -32,16 +33,17 @@ int main(int argc, char* argv[]) {
    // and creates an Armor vector with our items
    container processed = ProcessFile(input, 0);
    auto v_armor = std::make_unique<vector<Armor>>();
-   //std::unique_ptr<vector<Armor>> v_armor(vector<Armor>);
 
    UpdateArmorVec(v_armor, processed);
 
    //-----------------I/O-----------------
    cout << "Welcome to Fallout Finder!\n"
-      << "--------------------------" << endl << ">";
+      << "--------------------------" << endl 
+      << "[P]rint name, [S]ort Data, [E]xit Program\n";
    
    // From StackOverflow
-   /*for (string line; std::getline(std::cin, line); ) {
+   for (string line; std::getline(std::cin, line); ) {
+      
       
       if (line.empty()) { continue; }
 
@@ -50,24 +52,26 @@ int main(int argc, char* argv[]) {
          continue; 
       }
 
-      if (line == "R" || line == "r") {
+      if (line == "S" || line == "s") {
+         cout << ">";
+         continue;
+      }
+
+      if (line == "P" || line == "p") {
+         for (int i = 0; i < (*v_armor).size(); ++i) {
+            (*v_armor)[i].PrintName();
+            cout << "---------------" << endl;
+         }
+         cout << ">";
          continue;
       }
 
       if (line[0] == 'E' || line[0] == 'e') { break; }
 
       cout << "Sorry, I did not understand.\n>";
-   }*/
+   }
 
    cout << "Goodbye!\n";
-   
-
-   
-
-   for (int i = 0; i < (*v_armor).size(); ++i) {
-      (*v_armor)[i].PrintAll();
-      cout << "---------------" << endl;
-   }
 
    input.close();
    std::cin.get();
@@ -148,5 +152,20 @@ void UpdateArmorVec(std::unique_ptr<vector<Armor>>& v_output, container const &v
       // and push it into vector
       Armor var(v_input[r]);
       v_output->push_back(var);
+   }
+}
+
+void SortArray(std::unique_ptr<vector<Armor>>& v_array) {
+   int i = 1;
+
+   while (i < (*v_array).size()) {
+      Armor x = (*v_array)[i];
+      int j = i - 1;
+      while (j >= 0 && (*v_array).at(j) > x) {
+         (*v_array).at(j + 1) = (*v_array).at(j);
+         j = j - 1;
+      }
+      (*v_array).at(j + 1) = x;
+      ++i;
    }
 }

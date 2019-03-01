@@ -44,3 +44,19 @@ void Armor::PrintAll() {
       << "Value: " << value << std::endl
       << "BaseID: " << baseid << std::endl;
 }
+
+void Armor::PrintName() {
+   std::cout << "Name: " << name << std::endl;
+}
+
+bool Armor::operator>(const Armor& other) {
+   for (int i = 0; i < name.size(); ++i) {
+      if (name.at(i) > other.name.at(i)) {
+         return true;
+      }
+      else if (name.at(i) < other.name.at(i)) {
+         return false;
+      }
+   }
+   return false;
+}
