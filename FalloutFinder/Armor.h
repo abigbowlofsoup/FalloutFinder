@@ -24,7 +24,7 @@ public:
 
    std::string GetName() const override;
    int GetValue() const override;
-   int  GetWeight() const override;
+   int GetWeight() const override;
    std::string GetBaseId() const override;
 
    int GetDR() const;
