@@ -34,7 +34,6 @@ public:
    void PrintName();
 
    bool operator>(const Armor& other);
-
 };
 #endif
 

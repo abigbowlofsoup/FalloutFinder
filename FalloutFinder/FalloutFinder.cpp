@@ -13,13 +13,15 @@ using std::endl;
 
 #define container vector< vector<string> > 
 
+//----Predefined Function----
 void SkipBOM(std::ifstream &in);
 container ProcessFile(std::ifstream &in, int i_type);
 
 void UpdateArmorVec(std::unique_ptr<vector<Armor>>& v_output, container const &v_input);
 void SortArray(std::unique_ptr<vector<Armor>>& v_output);
+vector<Armor> FindItem(std::unique_ptr<vector<Armor>> const &v_output, string searchItem);
 
-int main(int argc, char* argv[]) {
+int main(int argc, char** argv[]) {
       
    //-----------------File I/O-----------------
    // Opening a .csv file for information
@@ -39,25 +41,46 @@ int main(int argc, char* argv[]) {
    cout << endl;
 
    //-----------------I/O-----------------
-   cout << "Welcome to Fallout Finder!\n"
-      << "--------------------------" << endl 
-      << "[P]rint name, [S]ort Data, [E]xit Program\n" << ">";
+   cout << "Welcome to Fallout Finder!" << endl;
+      
    
    // From StackOverflow
-   for (string line; std::getline(std::cin, line); ) {
-      
+   for (;;) {
+      cout << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
+      cout << "[P]rint name, [F]ind Item, [E]xit Program\n" << ">";
+      string line; std::getline(std::cin, line);
       
       if (line.empty()) { continue; }
 
 
-      if (line.at(0) == 'A' || line.at(0) == 'a') {
-         cout << ">";
-         continue; 
-      }
+      if (line.at(0) == 'F' || line.at(0) == 'f') {
+         string findEntry;
+         cout << "Enter name of item: ";
+         getline(std::cin, findEntry);
+         vector<Armor> test = FindItem(v_items, findEntry);
 
-      if (line.at(0) == 'S' || line.at(0) == 's') {
-         cout << ">";
-         continue;
+         if (test.size() == 0) {
+            cout << "Not a valid item name...returning to main menu..." << endl;
+            continue;
+         }
+
+         if (test.size() != 1) {
+            cout << "Which item would you like?" << endl << "-------------" << endl;
+            for (int i = 0; i < test.size(); ++i) cout << test[i].GetName() << endl;
+
+            cout << ">";
+            getline(std::cin, findEntry);
+
+            test = FindItem(v_items, findEntry);
+
+            if (test.size() != 1) {
+               cout << "Unable to find item...returning to main menu..." << endl;
+               continue;
+            }
+         }
+
+         test.at(0).PrintAll();
+         continue; 
       }
 
       if (line.at(0) == 'P' || line.at(0) == 'p') {
@@ -65,13 +88,12 @@ int main(int argc, char* argv[]) {
             (*v_items)[i].PrintName();
             cout << "---------------" << endl;
          }
-         cout << ">";
          continue;
       }
 
       if (line[0] == 'E' || line[0] == 'e') { break; }
 
-      cout << "Sorry, I did not understand.\n>";
+      cout << "Sorry, not a command." << endl;
    }
 
    cout << "Goodbye!\n";
@@ -177,4 +199,18 @@ void SortArray(std::unique_ptr<vector<Armor>>& v_array) {
    }
 
    cout << "Items Sorted!" << endl;
+}
+
+vector<Armor> FindItem(std::unique_ptr<vector<Armor>> const &v_output, string searchItem) {
+   vector<Armor> foundItems;
+   for (int i = 0; i < (*v_output).size(); ++i) {
+      string item = (*v_output)[i].GetName();
+      if (item.find(searchItem) == string::npos) {
+         continue;
+      }
+
+      foundItems.push_back((*v_output)[i]);
+   }
+   
+   return foundItems;
 }
