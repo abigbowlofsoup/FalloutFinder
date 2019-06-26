@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include "Armor.h"
+#include "Weapon.h"
 
 using std::vector;
 using std::string;
@@ -22,11 +23,15 @@ void SortArray(std::unique_ptr<vector<Armor>>& v_output);
 vector<Armor> FindItem(std::unique_ptr<vector<Armor>> const &v_output, string searchItem);
 
 int main(int argc, char** argv[]) {
+
+   vector<Weapon> weaponArr;
+   vector<Armor>  armorArr;
       
    //-----------------File I/O-----------------
    // Opening a .csv file for information
    std::ifstream input("../Armor.csv");
-   if (!input) {
+   if (!input) 
+   {
       std::cerr << "Could not open the file!" << endl;
       return 0;
    }
@@ -45,26 +50,30 @@ int main(int argc, char** argv[]) {
       
    
    // From StackOverflow
-   for (;;) {
+   for (;;) 
+   {
       cout << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
-      cout << "[P]rint name, [F]ind Item, [E]xit Program\n" << ">";
-      string line; std::getline(std::cin, line);
+      cout << "[P]rint All Items, [F]ind Item, [E]xit Program\n" << ">";
+      string line;
+      std::getline(std::cin, line);
       
       if (line.empty()) { continue; }
 
-
-      if (line.at(0) == 'F' || line.at(0) == 'f') {
+      if (line.at(0) == 'F' || line.at(0) == 'f') 
+      {
          string findEntry;
          cout << "Enter name of item: ";
          getline(std::cin, findEntry);
          vector<Armor> test = FindItem(v_items, findEntry);
 
-         if (test.size() == 0) {
+         if (test.size() == 0) 
+         {
             cout << "Not a valid item name...returning to main menu..." << endl;
             continue;
          }
 
-         if (test.size() != 1) {
+         if (test.size() != 1) 
+         {
             cout << "Which item would you like?" << endl << "-------------" << endl;
             for (int i = 0; i < test.size(); ++i) cout << test[i].GetName() << endl;
 
@@ -73,7 +82,8 @@ int main(int argc, char** argv[]) {
 
             test = FindItem(v_items, findEntry);
 
-            if (test.size() != 1) {
+            if (test.size() != 1) 
+            {
                cout << "Unable to find item...returning to main menu..." << endl;
                continue;
             }
@@ -83,8 +93,10 @@ int main(int argc, char** argv[]) {
          continue; 
       }
 
-      if (line.at(0) == 'P' || line.at(0) == 'p') {
-         for (int i = 0; i < (*v_items).size(); ++i) {
+      if (line.at(0) == 'P' || line.at(0) == 'p') 
+      {
+         for (int i = 0; i < (*v_items).size(); ++i) 
+         {
             (*v_items)[i].PrintName();
             cout << "---------------" << endl;
          }
@@ -104,7 +116,8 @@ int main(int argc, char** argv[]) {
 }
 
 // From StackOverflow
-void SkipBOM(std::ifstream &in) {
+void SkipBOM(std::ifstream &in) 
+{
    char test[3] = { 0 };
    in.read(test, 3);
    if ((unsigned char)test[0] == 0xEF &&
@@ -118,7 +131,8 @@ void SkipBOM(std::ifstream &in) {
 
 
 // 0 = Armor, 1 = Weapon
-container ProcessFile(std::ifstream &in, int i_type) {
+container ProcessFile(std::ifstream &in, int i_type) 
+{
    SkipBOM(in);
    container v_obj;
    // Standard variables in every Item
@@ -128,7 +142,8 @@ container ProcessFile(std::ifstream &in, int i_type) {
    string dummy;
    std::getline(in, dummy);
 
-   while (!in.eof()) {
+   while (!in.eof()) 
+   {
       vector<string> v_row;
 
       // Add all items to our 1d vector v_row for later
@@ -144,14 +159,16 @@ container ProcessFile(std::ifstream &in, int i_type) {
       v_row.push_back(_itemhp);
       
       // If it is armor we add the damage rating variable
-      if(i_type == 0){ 
+      if(i_type == 0)
+      { 
          string _dmg_r;
          std::getline(in, _dmg_r, '\n'); 
          v_row.push_back(_dmg_r);
       }
 
       // If it is a weapon we add multiple variables
-      if (i_type == 1) {
+      if (i_type == 1) 
+      {
          string _dmg_att;
          std::getline(in, _dmg_att, ',');
          string _dmg_proj;
@@ -172,8 +189,10 @@ container ProcessFile(std::ifstream &in, int i_type) {
 }
 
 // Adds our items to the Armor vector
-void UpdateArmorVec(std::unique_ptr<vector<Armor>>& v_output, container const &v_input) {
-   for (int r = 0; r < v_input.size(); ++r) {
+void UpdateArmorVec(std::unique_ptr<vector<Armor>>& v_output, container const &v_input) 
+{
+   for (int r = 0; r < v_input.size(); ++r) 
+   {
       // Create Armor instances out of 2d vector
       // and push it into vector
       Armor var(v_input[r]);
@@ -184,28 +203,35 @@ void UpdateArmorVec(std::unique_ptr<vector<Armor>>& v_output, container const &v
 }
 
 // Insertion Sort
-void SortArray(std::unique_ptr<vector<Armor>>& v_array) {
+void SortArray(std::unique_ptr<vector<Armor>>& v_array) 
+{
    int i = 1;
 
-   while (i < (*v_array).size()) {
+   while (i < (*v_array).size()) 
+   {
       Armor x = (*v_array)[i];
       int j = i - 1;
-      while (j >= 0 && (*v_array).at(j) > x) {
-         (*v_array).at(j + 1) = (*v_array).at(j);
+      while (j >= 0 && (*v_array)[j] > x) 
+      {
+         (*v_array)[j + 1] = (*v_array)[j];
          j = j - 1;
       }
-      (*v_array).at(j + 1) = x;
+      (*v_array)[j + 1] = x;
       ++i;
    }
 
    cout << "Items Sorted!" << endl;
 }
 
-vector<Armor> FindItem(std::unique_ptr<vector<Armor>> const &v_output, string searchItem) {
+vector<Armor> FindItem(std::unique_ptr<vector<Armor>> const &v_output, string searchItem) 
+{
    vector<Armor> foundItems;
-   for (int i = 0; i < (*v_output).size(); ++i) {
+
+   for (int i = 0; i < (*v_output).size(); ++i) 
+   {
       string item = (*v_output)[i].GetName();
-      if (item.find(searchItem) == string::npos) {
+      if (item.find(searchItem) == string::npos) 
+      {
          continue;
       }
 

@@ -5,33 +5,36 @@
 #include <string>
 #include "Item.h"
 
+using std::string;
+using std::vector;
 
 class Armor : public Item {
 private:
-   std::string name;
+   string name;
    int value;
    int weight;
-   std::string baseid;
-   int dmg_r;
+   string baseid;
    int item_hp;
+   int dmg_r;
 
 public:
-   Armor(std::string n, int v, int w, std::string bid, int dr, int ih)
-   : name(n), value(v), weight(w), baseid(bid), item_hp(ih), dmg_r(dr)
+   Armor(string n, int v, int w, string bid, int dr, int ih)
+   :name(n), value(v), weight(w), baseid(bid), item_hp(ih), dmg_r(dr)
    {}
 
-   Armor(const std::vector<std::string> &entity);
+   Armor(const vector<string> &entity);
 
-   std::string GetName() const override;
+   string GetName() const override;
    int GetValue() const override;
    int GetWeight() const override;
-   std::string GetBaseId() const override;
+   string GetBaseId() const override;
+   void PrintAll() const override;
+   void PrintName() const override;
 
    int GetDR() const;
    int GetItemHP() const;
 
-   void PrintAll();
-   void PrintName();
+  
 
    bool operator>(const Armor& other);
 };

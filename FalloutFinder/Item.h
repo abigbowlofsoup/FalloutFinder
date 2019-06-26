@@ -14,6 +14,8 @@ public:
    virtual int GetWeight() const  = 0;
    virtual int GetValue() const  = 0;
    virtual std::string GetBaseId() const  = 0;
+   virtual void PrintAll() const = 0;
+   virtual void PrintName() const = 0;
 };
 
 #endif 
