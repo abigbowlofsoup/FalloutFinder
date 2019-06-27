@@ -1,0 +1,13 @@
+﻿Name,Value,weight,baseid,item hp,damage,dps
+.32 Pistol,110,2,0000080a,100,6,18
+Wild Bill's Sidearm,250,2,xx00a7cb,250,10,30
+10mm Pistol,225,3,0000434f,150,9,54
+Colonel Autumn's 10mm Pistol,325,3,0006b531,225,13,78
+Silenced 10mm Pistol,250,3,00004350,80,8,48
+Chinese Pistol,190,2,00004325,150,4,24
+Zhu-Rong v418 Chinese Pistol,290,2,00060c2c,200,4,20
+Dart Gun,500,3,0000432a,150,6,44
+Scoped .44 Magnum,300,4,0000434d,100,35,78.8
+Blackhawk,500,4,000303a2,360,55,123.8
+Callahan's Magnum,750,4,xx00b806,400,65,146.3
+Paulson's Revolver,300,4,xx00829f,240,45,101.3

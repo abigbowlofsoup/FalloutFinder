@@ -16,7 +16,7 @@ using std::endl;
 
 //----Predefined Function----
 void SkipBOM(std::ifstream &in);
-container ProcessFile(std::ifstream &in, int i_type);
+void ProcessFile(std::ifstream &in, vector<Armor> &_armorArr);
 
 void UpdateArmorVec(std::unique_ptr<vector<Armor>>& v_output, container const &v_input);
 void SortArray(std::unique_ptr<vector<Armor>>& v_output);
@@ -40,8 +40,9 @@ int main(int argc, char** argv[]) {
    // and adds the sorted items into our vector
    // TODO: figure out what item is going to be created for the pointer
    auto v_items = std::make_unique<vector<Armor>>();
-   container processed = ProcessFile(input, 0);
-   UpdateArmorVec(v_items, processed);
+   //container processed = ProcessFile(input, 0);
+   //UpdateArmorVec(v_items, processed);
+   ProcessFile(input, armorArr);
    
    cout << endl;
 
@@ -131,12 +132,15 @@ void SkipBOM(std::ifstream &in)
 
 
 // 0 = Armor, 1 = Weapon
-container ProcessFile(std::ifstream &in, int i_type) 
+void ProcessFile(std::ifstream &in, vector<Armor> &_armorArr) 
 {
    SkipBOM(in);
-   container v_obj;
    // Standard variables in every Item
    string _name, _value, _weight, _baseid, _itemhp;
+   // Amount of columns in the Armor.csv
+   const int arrSize = 6;
+   // Array hold each line of information
+   string values[arrSize];
 
    // Get rid of column names in csv
    string dummy;
@@ -145,6 +149,30 @@ container ProcessFile(std::ifstream &in, int i_type)
    while (!in.eof()) 
    {
       vector<string> v_row;
+
+      string line;
+
+      std::getline(in, line);
+
+      if (!line.empty())
+      {
+         for (int i = 0; i < arrSize; ++i)
+         {
+            size_t delim = 0;
+            if (line.find(',') < line.size())
+            {
+               delim = line.find(',');
+            }
+            else
+            {
+               delim = line.size();
+            }
+
+            values[i] = line.substr(0, delim);
+
+            line.erase(0, values[i].length() + 1);
+         }
+      }
 
       // Add all items to our 1d vector v_row for later
       std::getline(in, _name, ',');
@@ -158,34 +186,13 @@ container ProcessFile(std::ifstream &in, int i_type)
       std::getline(in, _itemhp, ',');
       v_row.push_back(_itemhp);
       
-      // If it is armor we add the damage rating variable
-      if(i_type == 0)
-      { 
-         string _dmg_r;
-         std::getline(in, _dmg_r, '\n'); 
-         v_row.push_back(_dmg_r);
-      }
-
-      // If it is a weapon we add multiple variables
-      if (i_type == 1) 
-      {
-         string _dmg_att;
-         std::getline(in, _dmg_att, ',');
-         string _dmg_proj;
-         std::getline(in, _dmg_proj, ',');
-         string _att_sec;
-         std::getline(in, _att_sec, ',');
-         string _crit_dmg;
-         std::getline(in, _crit_dmg, '\n');
-      }
-      
       // Push vector in our 2d vector
-      v_obj.push_back(v_row);
+      //v_obj.push_back(v_row);
 
    }
 
    cout << "Items Processed!" << endl;
-   return v_obj;
+   //return v_obj;
 }
 
 // Adds our items to the Armor vector
